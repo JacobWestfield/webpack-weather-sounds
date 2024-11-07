@@ -9,10 +9,13 @@ class Sound {
     private _isOn: boolean;
     private _soundControl: HTMLInputElement;
 
+<<<<<<< HEAD
     /**
      * Getter for playback status
      * @returns (boolean) Returns audio playback private status
      */
+=======
+>>>>>>> 0ca6157a2c9ea193b5487b1f7e85c1c4d3d225ce
     public getIsOn(): boolean {
         return this._isOn;
     }
