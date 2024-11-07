@@ -5,9 +5,13 @@ import rainSound from "./assets/sounds/rain.mp3";
 import winterSound from "./assets/sounds/winter.mp3";
 
 class Sound {
-    sound: HTMLAudioElement;
-    isOn: boolean;
-    soundControl: HTMLInputElement;
+    private _sound: HTMLAudioElement;
+    private _isOn: boolean;
+    private _soundControl: HTMLInputElement;
+
+    public getIsOn(): boolean {
+        return this._isOn;
+    }
 
     /**
      * Class contructor
@@ -15,23 +19,23 @@ class Sound {
      * @param {HTMLInputElement} soundControl Sound control input (type "range") for sound object in this instance
      */
     constructor(sound: HTMLAudioElement, soundControl: HTMLInputElement) {
-        this.sound = sound;
-        this.isOn = false;
-        this.soundControl = soundControl;
+        this._sound = sound;
+        this._isOn = false;
+        this._soundControl = soundControl;
     }
 
     /**
      * Turning on/off sound playback and changing HTMLInputElement's visibility according to it's current status
      */
-    togglePlay(): void {
-        if (this.isOn) {
-            this.sound.pause();
-            this.isOn = false;
-            this.soundControl.classList.add("hidden");
+    public togglePlay(): void {
+        if (this._isOn) {
+            this._sound.pause();
+            this._isOn = false;
+            this._soundControl.classList.add("hidden");
         } else {
-            this.sound.play();
-            this.isOn = true;
-            this.soundControl.classList.remove("hidden");
+            this._sound.play();
+            this._isOn = true;
+            this._soundControl.classList.remove("hidden");
         }
     }
 
@@ -39,8 +43,8 @@ class Sound {
      *Changes volume for audio object in this instance
      * @param {string} value
      */
-    adjustVolume(value: number) {
-        this.sound.volume = value;
+    public adjustVolume(value: number) {
+        this._sound.volume = value;
     }
 }
 
@@ -85,24 +89,24 @@ winterVolumeControl.addEventListener("input", (e: Event): void => {
 });
 
 summerBtn.addEventListener("click", (): void => {
-    if (rainSoundObject.isOn) rainSoundObject.togglePlay();
-    if (winterSoundObject.isOn) winterSoundObject.togglePlay();
+    if (rainSoundObject.getIsOn()) rainSoundObject.togglePlay();
+    if (winterSoundObject.getIsOn()) winterSoundObject.togglePlay();
     summerSoundObject.togglePlay();
     bgImage.classList.remove(...bgClasses);
     bgImage.classList.add("bg-summer");
 });
 
 rainBtn.addEventListener("click", (): void => {
-    if (summerSoundObject.isOn) summerSoundObject.togglePlay();
-    if (winterSoundObject.isOn) winterSoundObject.togglePlay();
+    if (summerSoundObject.getIsOn()) summerSoundObject.togglePlay();
+    if (winterSoundObject.getIsOn()) winterSoundObject.togglePlay();
     rainSoundObject.togglePlay();
     bgImage.classList.remove(...bgClasses);
     bgImage.classList.add("bg-rainy");
 });
 
 winterBtn.addEventListener("click", (): void => {
-    if (rainSoundObject.isOn) rainSoundObject.togglePlay();
-    if (summerSoundObject.isOn) summerSoundObject.togglePlay();
+    if (rainSoundObject.getIsOn()) rainSoundObject.togglePlay();
+    if (summerSoundObject.getIsOn()) summerSoundObject.togglePlay();
     winterSoundObject.togglePlay();
     bgImage.classList.remove(...bgClasses);
     bgImage.classList.add("bg-winter");
