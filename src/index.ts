@@ -9,17 +9,6 @@ class Sound {
     private _isOn: boolean;
     private _soundControl: HTMLInputElement;
 
-<<<<<<< HEAD
-    /**
-     * Getter for playback status
-     * @returns (boolean) Returns audio playback private status
-     */
-=======
->>>>>>> 0ca6157a2c9ea193b5487b1f7e85c1c4d3d225ce
-    public getIsOn(): boolean {
-        return this._isOn;
-    }
-
     /**
      * Class contructor
      * @param {HTMLAudioElement} sound Sound object that will be operated by this instance
@@ -29,6 +18,14 @@ class Sound {
         this._sound = sound;
         this._isOn = false;
         this._soundControl = soundControl;
+    }
+
+    /**
+     * Getter for playback status
+     * @returns (boolean) Returns audio playback private status
+     */
+    get isOn(): boolean {
+        return this._isOn;
     }
 
     /**
@@ -50,8 +47,9 @@ class Sound {
      *Changes volume for audio object in this instance
      * @param {string} value
      */
-    public adjustVolume(value: number) {
-        this._sound.volume = value;
+    public adjustVolume(value: string): void {
+        const convertedValue: number = Number(value);
+        this._sound.volume = convertedValue;
     }
 }
 
@@ -82,38 +80,34 @@ const rainSoundObject = new Sound(rainAudio, rainVolumeControl);
 const winterSoundObject = new Sound(winterAudio, winterVolumeControl);
 
 summerVolumeControl.addEventListener("input", (e: Event): void => {
-    summerSoundObject.adjustVolume(
-        Number((e.target as HTMLInputElement).value)
-    );
+    summerSoundObject.adjustVolume((<HTMLInputElement>e.target).value);
 });
 rainVolumeControl.addEventListener("input", (e: Event): void => {
-    rainSoundObject.adjustVolume(Number((e.target as HTMLInputElement).value));
+    rainSoundObject.adjustVolume((<HTMLInputElement>e.target).value);
 });
 winterVolumeControl.addEventListener("input", (e: Event): void => {
-    winterSoundObject.adjustVolume(
-        Number((e.target as HTMLInputElement).value)
-    );
+    winterSoundObject.adjustVolume((<HTMLInputElement>e.target).value);
 });
 
 summerBtn.addEventListener("click", (): void => {
-    if (rainSoundObject.getIsOn()) rainSoundObject.togglePlay();
-    if (winterSoundObject.getIsOn()) winterSoundObject.togglePlay();
+    if (rainSoundObject.isOn) rainSoundObject.togglePlay();
+    if (winterSoundObject.isOn) winterSoundObject.togglePlay();
     summerSoundObject.togglePlay();
     bgImage.classList.remove(...bgClasses);
     bgImage.classList.add("bg-summer");
 });
 
 rainBtn.addEventListener("click", (): void => {
-    if (summerSoundObject.getIsOn()) summerSoundObject.togglePlay();
-    if (winterSoundObject.getIsOn()) winterSoundObject.togglePlay();
+    if (summerSoundObject.isOn) summerSoundObject.togglePlay();
+    if (winterSoundObject.isOn) winterSoundObject.togglePlay();
     rainSoundObject.togglePlay();
     bgImage.classList.remove(...bgClasses);
     bgImage.classList.add("bg-rainy");
 });
 
 winterBtn.addEventListener("click", (): void => {
-    if (rainSoundObject.getIsOn()) rainSoundObject.togglePlay();
-    if (summerSoundObject.getIsOn()) summerSoundObject.togglePlay();
+    if (rainSoundObject.isOn) rainSoundObject.togglePlay();
+    if (summerSoundObject.isOn) summerSoundObject.togglePlay();
     winterSoundObject.togglePlay();
     bgImage.classList.remove(...bgClasses);
     bgImage.classList.add("bg-winter");
